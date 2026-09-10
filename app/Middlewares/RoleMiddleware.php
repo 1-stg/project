@@ -15,6 +15,14 @@ class RoleMiddleware
         $this->errorController = new ErrorController();
     }
 
+    public function validateUserAdmin()
+    {
+        if ($this->userRole !== 'admin' && $this->userRole !== 'user') {
+            $this->errorController->showErrorPage(404);
+            exit;
+        }
+    }
+
     public function validateAdmin()
     {
         if ($this->userRole !== 'admin') {
