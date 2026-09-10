@@ -35,6 +35,17 @@ class UserModel
         return $stmt->fetch();
     }
 
+    public function getRole($roleId)
+    {
+        $pdo = Database::getConnection();
+
+        $stmt = $pdo->prepare('SELECT * FROM `user_role` WHERE `id` = ?');
+
+        $stmt->execute([$roleId]);
+
+        return $stmt->fetch();
+    }
+
     // public function getUserById($id)
     // {
     //     $pdo = Database::getConnection();

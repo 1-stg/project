@@ -64,7 +64,7 @@ class AuthController
             $_SESSION['success'] = 'Регистрация успешна. Теперь войдите в аккаунт';
 
             unset($_SESSION['error']);
-            unset($_SESSION['old']); // Очищаем старые данные, так как регистрация успешна
+            unset($_SESSION['old']);
 
             header('Location: /login');
             exit;
@@ -97,9 +97,10 @@ class AuthController
         } else {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_login'] = $user['login'];
+            $_SESSION['user_role'] = $userModel->getRole($user['role'])['role'];
 
             unset($_SESSION['error']);
-            unset($_SESSION['old']); // Очищаем старые данные при успешном входе
+            unset($_SESSION['old']);
 
             header('Location: /');
             exit;
@@ -109,6 +110,12 @@ class AuthController
 
     public function logout()
     {
-        return;
+        unset($_SESSION['user_id']);
+        unset($_SESSION['user_login']);
+        $_SESSION['user_role'] = 'guest';
+        $_SESSION['success'] = 'Вы вышли.';
+
+        header('Location: /');
+        exit;
     }
 }
